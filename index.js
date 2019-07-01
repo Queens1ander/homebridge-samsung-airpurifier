@@ -47,12 +47,11 @@ SamsungAirpuri.prototype = {
 
         //현재 모드 설정
         this.airpuriSamsung.getCharacteristic(Characteristic.TargetAirPurifierState)
-            .on('set', this.setTargetAirPurifierState.bind(this))       
-            .on('get', this.getTargetAirPurifierState.bind(this));
+            .on('get', this.getTargetAirPurifierState.bind(this))       
+            .on('set', this.setTargetAirPurifierState.bind(this));
    
         //현재 모드 확인
         this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState)
-            .on('set', this.setCurrentAirPurifierState.bind(this))       
             .on('get', this.getCurrentAirPurifierState.bind(this));
 
         var informationService = new Service.AccessoryInformation()
