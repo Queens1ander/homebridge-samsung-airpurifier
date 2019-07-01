@@ -97,7 +97,7 @@ setActive: function(state, callback) {
             case Characteristic.Active.ACTIVE:
                 var body;
                 this.log("켜기 설정");
-                str = 'curl -X PUT -d \'{\"power"\ : \"On"\}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
+                str = 'curl -X PUT -d \'{"Operation": {"power" : "On"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
@@ -112,7 +112,7 @@ setActive: function(state, callback) {
             case Characteristic.Active.INACTIVE:
                 var body;
                 this.log("끄기 설정");
-                str = 'curl -X PUT -d \'{\"power"\ : \"Off"\}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
+                str = 'curl -X PUT -d \'{"Operation": {"power" : "Off"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
