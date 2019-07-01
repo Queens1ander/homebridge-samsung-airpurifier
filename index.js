@@ -99,7 +99,7 @@ setActive: function(value, callback) {
                 this.log("켜기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "On"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
-                this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(PURIFYING_AIR);
+                this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(2);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -115,7 +115,7 @@ setActive: function(value, callback) {
                 this.log("끄기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "Off"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
-                this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(INACTIVE);
+                this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(0);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
