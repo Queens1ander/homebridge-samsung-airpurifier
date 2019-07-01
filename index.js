@@ -98,12 +98,14 @@ SamsungAirpuri.prototype = {
         patchCert = this.patchCert;
         
         var activeFuncion = function(state) {
-            if (state == Characteristic.Active.ACTIVE) {
-                str = 'curl -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + token + '" --cert ' + patchCert + ' --insecure -X PUT -d \'{"Operation" : {\"power"\ : \"On"\}}\' https://' + ip + ':8888/devices/0';
-                console.log("전원 켜짐 설정");
-            } else {
-                console.log("전원 꺼짐 설정");
+            if (state == Characteristic.Active.INACTIVE) {
                 str = 'curl -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + token + '" --cert ' + patchCert + ' --insecure -X PUT -d \'{"Operation" : {\"power"\ : \"Off"\}}\' https://' + ip + ':8888/devices/0';
+                console.log("전원 꺼짐 설정");
+                getCurrentAirPurifierState.updateValue(Characteristic.CurrentAirPurifierState.INACTIVE);
+            } else {
+                console.log("전원 켜짐 설정");
+                str = 'curl -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + token + '" --cert ' + patchCert + ' --insecure -X PUT -d \'{"Operation" : {\"power"\ : \"On"\}}\' https://' + ip + ':8888/devices/0';
+                getCurrentAirPurifierState.updateValue(Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
             }
         }
        
@@ -136,7 +138,7 @@ SamsungAirpuri.prototype = {
                 this.log("전원 꺼짐 확인");
             } else if (this.response == "On") {
                 this.log("전원 켜짐 확인");
-                callback(null, Characteristic.CurrentAirPurifierState.IDLE);
+                callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
             } else
                 this.log(this.response + "연결 오류");
             }
