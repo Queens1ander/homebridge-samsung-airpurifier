@@ -107,16 +107,14 @@ SamsungAirpuri.prototype = {
             }
         }
        
-        activeFuncion(state);
-        this.log(str);
-
         this.execRequest(str, body, function(error, stdout, stderr) {
-            if (error) {
-            } else {
-                callback();
-                this.log(stdout);
-            }
-        }.bind(this));
+                    if (error) {
+                        callback(error);
+                    } else {
+                        callback();
+                        this.log(stdout);
+                    }
+                }.bind(this));
     },
     
     getCurrentAirPurifierState: function(callback) {
@@ -132,7 +130,7 @@ SamsungAirpuri.prototype = {
                 this.response = stdout;
                 this.response = this.response.substr(1, this.response.length - 3);
             if (this.response == "Off") {
-                callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
+                callback(null, Characteristic.CurrentAirPurifierState.IDLE);
                 this.log("전원 꺼짐 확인");
             } else if (this.response == "On") {
                 this.log("전원 켜짐 확인");
