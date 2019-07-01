@@ -104,7 +104,7 @@ setActive: function(value, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        callback();
+                        //callback();
                         this.log(stdout);
                     }
                 }.bind(this));
@@ -120,7 +120,7 @@ setActive: function(value, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        callback();
+                        //callback();
                         this.log(stdout);
                     }
                 }.bind(this));
