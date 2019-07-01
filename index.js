@@ -103,7 +103,7 @@ setActive: function(state, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        callback(null, state);
+                        //callback();
                         this.log(stdout);
                     }
                 }.bind(this));
@@ -118,7 +118,7 @@ setActive: function(state, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        callback(null, state);
+                        //callback();
                         this.log(stdout);
                     }
                 }.bind(this));
