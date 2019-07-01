@@ -47,6 +47,7 @@ SamsungAirpuri.prototype = {
 
         //현재 모드 설정
         this.airpuriSamsung.getCharacteristic(Characteristic.TargetAirPurifierState)   
+            .on('set', this.setCurrentAirPurifierState.bind(this))   
             .on('get', this.getCurrentAirPurifierState.bind(this));
    
         //현재 모드 확인
@@ -132,7 +133,7 @@ SamsungAirpuri.prototype = {
                 this.response = stdout;
                 this.response = this.response.substr(1, this.response.length - 3);
             if (this.response == 1 || this.response == 2 || this.response == 3 || this.response == 4) {
-                callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
+                callback(null, Characteristic.CurrentAirPurifierState.IDLE);
                 this.log("수동 모드 확인");
             } else if (this.response == 0) {
                 this.log("자동 모드 확인");
