@@ -137,7 +137,7 @@ SamsungAirpuri.prototype = {
                 this.log("전원 꺼짐 확인");
             } else if (this.response == "On") {
                 this.log("전원 켜짐 확인");
-                callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
+                callback(null, Characteristic.CurrentAirPurifierState.IDLE);
             } else
                 this.log(this.response + "연결 오류");
             }
