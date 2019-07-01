@@ -90,9 +90,9 @@ SamsungAirpuri.prototype = {
 
     },
 
-setActive: function(value, callback) {
+setActive: function(state, callback) {
 
-        switch (value) {
+        switch (state) {
 
             case Characteristic.Active.ACTIVE:
                 var body;
@@ -103,7 +103,7 @@ setActive: function(value, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        callback();
+                        callback(null, state);
                         this.log(stdout);
                     }
                 }.bind(this));
@@ -118,7 +118,7 @@ setActive: function(value, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        callback();
+                        callback(null, state);
                         this.log(stdout);
                     }
                 }.bind(this));
