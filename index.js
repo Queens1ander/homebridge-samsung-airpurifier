@@ -90,9 +90,9 @@ SamsungAirpuri.prototype = {
 
     },
 
-setActive: function(state, callback) {
+setActive: function(value, callback) {
 
-        switch (state) {
+        switch (value) {
 
             case Characteristic.Active.ACTIVE:
                 var body;
