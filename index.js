@@ -130,10 +130,10 @@ SamsungAirpuri.prototype = {
                 this.response = stdout;
                 this.response = this.response.substr(1, this.response.length - 3);
             if (this.response == "Off") {
-                callback(null, Characteristic.CurrentAirPurifierState.IDLE);
-                this.log("전원 꺼짐 확인");
+                callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
+                this.log("전원 꺼짐 확인2");
             } else if (this.response == "On") {
-                this.log("전원 켜짐 확인");
+                this.log("전원 켜짐 확인2");
                 callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
             } else
                 this.log(this.response + "연결 오류");
