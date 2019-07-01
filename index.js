@@ -99,6 +99,7 @@ SamsungAirpuri.prototype = {
                 this.log("전원 켜짐 설정")
                 str = 'curl -X PUT -d \'{"Operation" : {\"power"\ : \"On"\}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
+                callback(null, Characteristic.Active.ACTIVE);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -114,6 +115,7 @@ SamsungAirpuri.prototype = {
                 this.log("전원 꺼짐 설정")
                 str = 'curl -X PUT -d \'{"Operation" : {\"power"\ : \"Off"\}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
+                callback(null, Characteristic.Active.INACTIVE);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -124,9 +126,6 @@ SamsungAirpuri.prototype = {
                 }.bind(this));
                 break;
         }
-        
-        str = 'curl -s -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure -X GET https://' + this.ip + ':8888/devices|jq \'.Devices[0].Operation.power\'';
-        this.log(str);
     },
     
     getCurrentAirPurifierState: function(callback) {
