@@ -99,7 +99,6 @@ setActive: function(state, callback) {
                 this.log("켜기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "On"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
-                Characteristic.Active.ACTIVE = 1;
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -115,7 +114,6 @@ setActive: function(state, callback) {
                 this.log("끄기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "Off"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
-                Characteristic.Active.INACTIVE = 0;
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
