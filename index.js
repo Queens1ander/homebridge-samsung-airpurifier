@@ -124,6 +124,9 @@ SamsungAirpuri.prototype = {
                 }.bind(this));
                 break;
         }
+        
+        str = 'curl -s -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure -X GET https://' + this.ip + ':8888/devices|jq \'.Devices[0].Operation.power\'';
+        this.log(str);
     },
     
     getCurrentAirPurifierState: function(callback) {
