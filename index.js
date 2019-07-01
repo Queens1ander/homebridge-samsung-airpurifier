@@ -17,8 +17,6 @@ function SamsungAirpuri(log, config) {
     this.token = config["token"];
     this.patchCert = config["patchCert"];
     this.accessoryName = config["name"];
-    this.setOn = true;
-    this.setOff = false;
 }
 
 SamsungAirpuri.prototype = {
@@ -99,7 +97,6 @@ SamsungAirpuri.prototype = {
                 this.log("전원 켜짐 설정")
                 str = 'curl -X PUT -d \'{"Operation" : {\"power"\ : \"On"\}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
-                callback(null, Characteristic.Active.ACTIVE);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -115,7 +112,6 @@ SamsungAirpuri.prototype = {
                 this.log("전원 꺼짐 설정")
                 str = 'curl -X PUT -d \'{"Operation" : {\"power"\ : \"Off"\}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
                 this.log(str);
-                callback(null, Characteristic.Active.INACTIVE);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -141,10 +137,10 @@ SamsungAirpuri.prototype = {
                 this.response = stdout;
                 this.response = this.response.substr(1, this.response.length - 3);
             if (this.response == "Off") {
-                callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
-                this.log("전원 꺼짐 확인");
+                callback(null, Characteristic.CurrentAirPurifierState.IDLE);
+                this.log("전원 꺼짐 확인2");
             } else if (this.response == "On") {
-                this.log("전원 켜짐 확인");
+                this.log("전원 켜짐 확인2");
                 callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
             } else
                 this.log(this.response + "연결 오류");
