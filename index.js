@@ -12,7 +12,7 @@ module.exports = function(homebridge) {
 
 function SamsungAirpuri(log, config) {
     this.log = log;
-    this.name = config["name"];
+    this.name = config["accessory"];
     this.ip = config["ip"];
     this.token = config["token"];
     this.patchCert = config["patchCert"];
