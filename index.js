@@ -113,11 +113,11 @@ SamsungAirpuri.prototype = {
         this.execRequest(str, body, function(error, stdout, stderr) {
             if (error) {
             } else {
-                //callback();
+                callback();
                 this.log(stdout);
             }
         }.bind(this));
-        callback();
+
     },
     
     getCurrentAirPurifierState: function(callback) {
