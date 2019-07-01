@@ -113,7 +113,7 @@ setActive: function(state, callback) {
                 var body;
                 this.log("끄기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "Off"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
-                this.log(str);            
+                this.log(str);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
