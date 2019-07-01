@@ -42,8 +42,7 @@ SamsungAirpuri.prototype = {
 
         //전원 설정
         this.airpuriSamsung.getCharacteristic(Characteristic.Active)
-            .on('get', this.getActive.bind(this))
-            .on('set', this.setActive.bind(this));
+            .on('get', this.getActive.bind(this));
 
         //현재 모드 설정
         this.airpuriSamsung.getCharacteristic(Characteristic.TargetAirPurifierState)   
