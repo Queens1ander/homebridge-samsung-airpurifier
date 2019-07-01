@@ -187,10 +187,10 @@ SamsungAirpuri.prototype = {
             } else {
                 this.response = stdout;
                 this.response = this.response.substr(1, this.response.length - 3);
-            if (this.response == 1 || this.response == 2 || this.response == 3 || this.response == 4) {
+            if (this.response == "1" || this.response == "2" || this.response == "3" || this.response == "4") {
                 callback(null, Characteristic.TargetAirPurifierState.MANUAL);
                 this.log("수동 모드 확인");
-            } else if (this.response == 0) {
+            } else if (this.response == "0") {
                 this.log("자동 모드 확인");
                 callback(null, Characteristic.TargetAirPurifierState.AUTO);
             } else
