@@ -103,7 +103,7 @@ setActive: function(state, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        //callback();
+                        callback();
                         this.log(stdout);
                     }
                 }.bind(this));
@@ -118,12 +118,13 @@ setActive: function(state, callback) {
                     if (error) {
                         callback(error);
                     } else {
-                        //callback();
+                        callback();
                         this.log(stdout);
                     }
                 }.bind(this));
                 break;
          }
+    callback();
     },
 
     
