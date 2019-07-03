@@ -69,7 +69,6 @@ SamsungAirpuri.prototype = {
         var str;
         var body;
         str = 'curl -s -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure -X GET https://' + this.ip + ':8888/devices|jq \'.Devices[0].Operation.power\'';
-        this.log(str);
 
         this.execRequest(str, body, function(error, stdout, stderr) {
             if (error) {
@@ -79,9 +78,9 @@ SamsungAirpuri.prototype = {
                 this.response = this.response.substr(1, this.response.length - 3);
             if (this.response == "Off") {
                 callback(null, Characteristic.Active.INACTIVE);
-                this.log("전원 꺼짐 확인");
+                //this.log("전원 꺼짐 확인");
             } else if (this.response == "On") {
-                this.log("전원 켜짐 확인");
+                //this.log("전원 켜짐 확인");
                 callback(null, Characteristic.Active.ACTIVE);
             } else
                 this.log(this.response + "연결 오류");
@@ -96,9 +95,8 @@ setActive: function(value, callback) {
 
             case Characteristic.Active.ACTIVE:
                 var body;
-                this.log("켜기 설정");
+                //this.log("켜기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "On"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
-                this.log(str);
                 this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(2);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
@@ -112,9 +110,8 @@ setActive: function(value, callback) {
 
             case Characteristic.Active.INACTIVE:
                 var body;
-                this.log("끄기 설정");
+                //this.log("끄기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "Off"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
-                this.log(str);
                 this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(0);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
@@ -133,7 +130,6 @@ setActive: function(value, callback) {
         var str;
         var body;
         str = 'curl -s -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure -X GET https://' + this.ip + ':8888/devices|jq \'.Devices[0].Operation.power\'';
-        this.log(str);
 
         this.execRequest(str, body, function(error, stdout, stderr) {
             if (error) {
@@ -143,9 +139,9 @@ setActive: function(value, callback) {
                 this.response = this.response.substr(1, this.response.length - 3);
             if (this.response == "Off") {
                 callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
-                this.log("전원 꺼짐 확인2");
+                //this.log("전원 꺼짐 확인2");
             } else if (this.response == "On") {
-                this.log("전원 켜짐 확인2");
+                //this.log("전원 켜짐 확인2");
                 callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
             } else
                 this.log(this.response + "연결 오류");
@@ -158,7 +154,6 @@ setActive: function(value, callback) {
         var str;
         var body;
         str = 'curl -s -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure -X GET https://' + this.ip + ':8888/devices|jq \'.Devices[0].Wind.speedLevel\'';
-        this.log(str);
 
         this.execRequest(str, body, function(error, stdout, stderr) {
             if (error) {
@@ -167,9 +162,9 @@ setActive: function(value, callback) {
                 this.response = parseInt(stdout);
             if (this.response == 1 || this.response == 2 || this.response == 3 || this.response == 4) {
                 callback(null, Characteristic.TargetAirPurifierState.MANUAL);
-                this.log("수동 모드 확인");
+                //this.log("수동 모드 확인");
             } else if (this.response == 0) {
-                this.log("자동 모드 확인");
+                //this.log("자동 모드 확인");
                 callback(null, Characteristic.TargetAirPurifierState.AUTO);
             } else
                 this.log(this.response + "연결 오류");
@@ -184,9 +179,8 @@ setActive: function(value, callback) {
 
             case Characteristic.TargetAirPurifierState.MANUAL:
                 var body;
-                this.log("취침모드로 설정");
+                //this.log("취침모드로 설정");
                 str = 'curl -X PUT -d \'{"speedLevel": 1}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0/wind';
-                this.log(str);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
@@ -199,9 +193,8 @@ setActive: function(value, callback) {
 
             case Characteristic.TargetAirPurifierState.AUTO:
                 var body;
-                this.log("자동모드로 설정");
+                //this.log("자동모드로 설정");
                 str = 'curl -X PUT -d \'{"speedLevel": 0}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0/wind';
-                this.log(str);
                 this.execRequest(str, body, function(error, stdout, stderr) {
                     if (error) {
                         callback(error);
