@@ -17,8 +17,6 @@ function SamsungAirpuri(log, config) {
     this.token = config["token"];
     this.patchCert = config["patchCert"];
     this.accessoryName = config["name"];
-    this.setOn = true;
-    this.setOff = false;
 }
 
 SamsungAirpuri.prototype = {
@@ -103,7 +101,7 @@ setActive: function(value, callback) {
                         callback(error);
                     } else {
                         callback();
-                        this.log(stdout);
+                        //this.log(stdout);
                     }
                 }.bind(this));
                 break;
@@ -118,7 +116,7 @@ setActive: function(value, callback) {
                         callback(error);
                     } else {
                         callback();
-                        this.log(stdout);
+                        //this.log(stdout);
                     }
                 }.bind(this));
                 break;
@@ -186,7 +184,7 @@ setActive: function(value, callback) {
                         callback(error);
                     } else {
                         callback();
-                        this.log(stdout);
+                        //this.log(stdout);
                     }
                 }.bind(this));
                 break;
@@ -200,7 +198,7 @@ setActive: function(value, callback) {
                         callback(error);
                     } else {
                         callback();
-                        this.log(stdout);
+                        //this.log(stdout);
                     }
                 }.bind(this));
                 break;
