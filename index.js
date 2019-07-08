@@ -71,7 +71,7 @@ SamsungAirpuri.prototype = {
                 callback(error);
             } else {
                 body = stdout;
-	            body = body.substr(1, body.length - 3);
+	        body = body.substr(1, body.length - 3);
               if (body == "Off") {
                 callback(null, Characteristic.Active.INACTIVE);
                 //this.log("비활성화 확인");
@@ -79,7 +79,7 @@ SamsungAirpuri.prototype = {
                 callback(null, Characteristic.Active.ACTIVE);
                 //this.log("활성화 확인");                
               } else
-		        this.log("활성화 확인 오류");
+		  this.log("활성화 확인 오류");
             }
         }.bind(this));
     },
@@ -109,7 +109,6 @@ SamsungAirpuri.prototype = {
                 var body;
                 //this.log("끄기 설정");
                 str = 'curl -X PUT -d \'{"Operation": {"power" : "Off"}}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0';
-                
                 this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState).updateValue(0);
                 
                 this.execRequest(str, body, function(error, stdout, stderr) {
@@ -134,7 +133,7 @@ SamsungAirpuri.prototype = {
                 callback(error);
             } else {
                 body = stdout;
-	            body = body.substr(1, body.length - 3);
+	        body = body.substr(1, body.length - 3);
             if (body == "Off") {
                 callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
                 //this.log("전원 꺼짐 확인2");
@@ -142,7 +141,7 @@ SamsungAirpuri.prototype = {
                 //this.log("전원 켜짐 확인2");
                 callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
             } else
-		        this.log("현재 모드 확인 오류");
+		this.log("현재 모드 확인 오류");
             }
         }.bind(this));
     },
