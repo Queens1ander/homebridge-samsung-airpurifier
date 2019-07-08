@@ -136,10 +136,10 @@ SamsungAirpuri.prototype = {
 	        body = body.substr(1, body.length - 3);
             if (body == "Off") {
                 callback(null, Characteristic.CurrentAirPurifierState.INACTIVE);
-                //this.log("전원 꺼짐 확인2");
+                //this.log("비활성화 모드 확인");
             } else if (body == "On") {
-                //this.log("전원 켜짐 확인2");
                 callback(null, Characteristic.CurrentAirPurifierState.PURIFYING_AIR);
+		//this.log("공기청정 모드 확인");
             } else
 		this.log("현재 모드 확인 오류");
             }
@@ -184,7 +184,6 @@ SamsungAirpuri.prototype = {
                         callback(error);
                     } else {
                         callback(null);
-                        //this.log(stdout);
                     }
                 }.bind(this));
                 break;
@@ -200,7 +199,6 @@ SamsungAirpuri.prototype = {
                         callback(error);
                     } else {
                         callback(null);
-                        //this.log(stdout);
                     }
                 }.bind(this));
                 break;
