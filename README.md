@@ -1,48 +1,71 @@
-#Homebridge-samsung-airconditioner
+□ 설치 방법
+  * 저의 작업 환경 : 시놀로지 나스 도커, marcoraddatz/homebridge 이미지 사용
+                    삼성 가습 공기청정기 (17년형, AX40M6581WMD 모델 사용)
 
-Samsung Airconditioenr plugin for [Homebridge]
+ 1) Homebridge 설치
+   
+    npm install -g https://github.com/Km81/homebridge-samsung-airpurifier
 
-This allows you to control your Samsung Airconditioner with HomeKit and Siri.
+ 2) jq 설치 및 장비 토큰 추출
+   ① Putty로 도커 이미지에 접속
+     sudo docker exec -it homebridge-samsung-airpurifier /bin/sh
+     (homebridge-samsung-airpurifier 도커 이미지 이름)
 
-THIS SCRIPT FOR NOW WORKS ONLY WITH THE AC WITH THE PORT NUMBER 8888 AND NOT WITH THE PORT 2878
+   ② jq 설치
+     apt-get install --no-cache jq
 
-##Installation
-1. Install homebridge using: npm install -g homebridge
-2. Install this plugin using: sudo npm install -g homebridge-samsung-airconditioner
-3. To obtain a token run in a shell window the file Server8889.py: python Server8889.py
+   ③ 토큰 추출 (도커 이미지 접속 상태에서 진행)
 
-	3.1 Open another shell window, copy and past the command: 
-curl -k -H "Content-Type: application/json" -H "DeviceToken: xxxxxxxxxxx" --cert /usr/local/lib/node_modules/homebridge-samsung-airconditioner/ac14k_m.pem --insecure -X POST https://192.168.1.152:8888/devicetoken/request
+     cd /usr/local/lib/node_modules/homebridge-samsung-airpurifier
+    
+     상기 폴더로 이동 후,
 
-	3.2 In this string change 192.168.1.152 with the ip of your Airconditioner
+     폴더 내 파일인 Server8889.py 파일의 내용 중 certfile의 경로를 수정 
+     (marcoraddatz/homebridge 이미지를 사용할 경우, 수정 불필요)
+    
+     certfile='/usr/local/lib/node_modules/homebridge-samsung-airpurifier/ac14k_m.pem' 
+    
+     수정 완료 후, 하기 파이썬 실행
 
-	3.3 Send the command
+     python Server8889.py
+ 
+     이 상태에서 Putty 창을 하나 더 실행하고, 같은 도커 이미지에 다시 접속 후, 경로 이동
 
-	3.4 Turn On your AC
+     sudo docker exec -it homebridge-samsung-airpurifier /bin/sh
+     cd /usr/local/lib/node_modules/homebridge-samsung-airpurifier
 
-	3.5 In the window where are running the file Server8889.py should be appare the TOKEN, copy and past it in your config.json
+     그리고, 하기 커맨드 실행 
 
-4. Remember to install "Samsung root certificate" in the System
+     curl -k -H "Content-Type: application/json" -H "DeviceToken: xxxxxxxxxxx" --cert /usr/local/lib/node_modules/homebridge-samsung-airpurifier/ac14k_m.pem --insecure -X POST https://192.168.1.xxx:8888/devicetoken/request
+     (https://192.168.1.xxx 는 본인 에어컨 장비 ip로 수정)
 
-	4.1 if you are on the mac double click on the certain
-	
-	4.2 in you are in Raspberry to add the root certificate this:
-	
-		sudo mkdir /usr/share/ca-certificates/local
-		
-		sudo cp /usr/lib/node_modules/homebridge-samsung-airconditioner/ac14k_m.pem /usr/share/ca-certificates/local/
-		
-		sudo update-ca-certificates
+     여기서, 에어컨 장비 전원을 키면 처음 Putty 창에서 토큰 정보가 나옴
 
-5. Update your configuration file. See `config.json`.
+      {"DeviceToken":"XXXXXXXXXX"} 
 
-	5.1 Change the ip with the ip of your AC
+      토큰 추출 완료
 
-	5.2 Change the token with the token obtain in step 3
+ 3) config 수정
+   - config.json 파일 내 accessories 추가
+     . "accessory" : 변경 불가 
+     . "name" : 홈킷 장치 이름
+     . "ip" : 삼성 공기청정기 장비 ip
+     . "token" : 삼성 공기청정기 고유 토큰
+     . "patchCert" : ac14k_m.pem 파일 경로    
 
-	5.3 if necessary change the patchCert
-	
-	5.4 If ypu obtain an error with this string "Power function failed /bin/sh: jq: not found" install jq with the command brew install jq
-	
-6. If you obtain an Nan error see if your AC is connected to the wifi.
+  예시) 
+ 
+  "accessories": [
+	{
+      "accessory": "SamsungAirpurifier",
+      "name": "침실 공기청정기",
+      "ip": "192.168.1.XX",
+      "token": "XXXXXXXXX",
+      "patchCert": "/usr/local/lib/node_modules/homebridge-samsung-airpurifier/ac14k_m.pem"
+	}
+  ],
 
+□ 홈킷 구성 내용
+  1) 설정
+    - 스윙모드    →   가습 설정 [ Off : 해제 / On : 가습 ]
+    - 모드        →   풍속 설정 [ 수동 : 취침 / 자동 : 자동풍 ]   
