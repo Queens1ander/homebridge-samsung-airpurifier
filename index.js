@@ -49,12 +49,7 @@ SamsungAirpuri.prototype = {
         //현재 모드 확인
         this.airpuriSamsung.getCharacteristic(Characteristic.CurrentAirPurifierState)
             .on('get', this.getCurrentAirPurifierState.bind(this));
-	    
-        //스윙모드 설정
-        this.airpuriSamsung.getCharacteristic(Characteristic.SwingMode)
-            .on('get', this.getSwingMode.bind(this))
-            .on('set', this.setSwingMode.bind(this));  	    
-
+	   	    
         var informationService = new Service.AccessoryInformation()
             .setCharacteristic(Characteristic.Manufacturer, 'Samsung')
             .setCharacteristic(Characteristic.Model, 'Air purifier')
@@ -151,64 +146,6 @@ SamsungAirpuri.prototype = {
         }.bind(this));
     },
 	
-    getSwingMode: function(callback) {
-	var str;
-	var body;
-        str = 'curl -s -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure -X GET https://' + this.ip + ':8888/devices|jq \'.Devices[0].Mode.options[2]\'';
-
-        this.execRequest(str, body, function(error, stdout, stderr) {
-            if (error) {
-                callback(error);
-            } else {
-                body = stdout;
-	        body = body.substr(1, body.length - 3);
-            if (body == "Humidi_Off") {
-                callback(null, Characteristic.SwingMode.SWING_DISABLED);
-                //this.log("무풍모드해제 확인");
-            } else if (body == "Humidi_On") {
-                //this.log("무풍모드 확인");
-                callback(null, Characteristic.SwingMode.SWING_ENABLED);
-            } else
-		this.log("무풍모드 확인 오류");
-            }
-        }.bind(this));
-    },
-    
-    setSwingMode: function(state, callback) {
-
-        switch (state) {
-
-            case Characteristic.SwingMode.SWING_ENABLED:
-	        var str;
-	        var body;
-                //this.log("무풍모드 설정")
-                str = 'curl -X PUT -d \'{"options": ["Humidi_On"]}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0/mode';
-
-                this.execRequest(str, body, function(error, stdout, stderr) {
-                    if (error) {
-                        callback(error);
-                    } else {
-                        callback(null);
-                    }
-                }.bind(this));
-                break;
-
-            case Characteristic.SwingMode.SWING_DISABLED:
-	        var str;
-	        var body;
-                //this.log("무풍모드해제 설정")
-                str = 'curl -X PUT -d \'{"options": ["Humidi_Off"]}\' -v -k -H "Content-Type: application/json" -H "Authorization: Bearer ' + this.token + '" --cert ' + this.patchCert + ' --insecure https://' + this.ip + ':8888/devices/0/mode';
- 
-                this.execRequest(str, body, function(error, stdout, stderr) {
-                    if (error) {
-                        callback(error);
-                    } else {
-                        callback(null);
-                    }
-                }.bind(this));
-                break;
-        }
-    },
 	
     getTargetAirPurifierState: function(callback) {
         var str;
